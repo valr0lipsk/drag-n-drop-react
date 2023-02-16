@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState } from "react";
+import { CreateTodo } from "./components/CreateTodo";
+import { Todos } from "./components/Todos";
 
+const defaultTodos = [
+  { id: 1, title: "Learn Framer Motion", completed: false },
+  { id: 2, title: "Create nice animation", completed: false },
+  { id: 3, title: "Use Reorder component", completed: false },
+];
 function App() {
+  const [todos, setTodos] = useState(defaultTodos);
+
+  const onRemove = (id) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <CreateTodo onCreate={setTodos} />
+      <Todos todos={todos} setTodos={setTodos} onRemove={onRemove} />
     </div>
   );
 }
